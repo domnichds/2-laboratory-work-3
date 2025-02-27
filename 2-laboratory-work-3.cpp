@@ -1,20 +1,58 @@
-﻿// 2-laboratory-work-3.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <string>
 
-#include <iostream>
+using namespace std;
 
+class School
+{
+protected:
+	string name;
+	unsigned int number_of_student;
+public:
+	School(const string& name, const unsigned int number_of_student)
+	{
+		this->name = name;
+		this->number_of_student = number_of_student;
+	}
+	virtual void printInfo()
+	{
+		cout << "Название школы: " << this->name << endl
+			<< "Количество учеников: " << this->number_of_student << endl;
+	}
+};
+class SpecialSchool : public School
+{
+private:
+	string type;
+public:
+	SpecialSchool(const string& name, const unsigned int number_of_student, const string& type) : School(name, number_of_student)
+	{
+		this->type = type;
+	}
+	void printInfo()
+	{
+		School::printInfo();
+		cout << "Название специализации: " << this->type << endl;
+	}
+};
 int main()
 {
-    std::cout << "Hello World!\n";
+	setlocale(LC_ALL, "Russian");
+
+	//Статический полиморфизм
+	cout << "Статический полиморфизм" << endl;
+	School ob1("2109", 2000);
+	ob1.printInfo();
+	cout << endl;
+	SpecialSchool ob2("1580", 3000, "Ingener");
+	ob2.printInfo();
+	cout << endl;
+
+	//Динамический полиморфизм
+	cout << "Динамичекий полиморфизм" << endl;
+	School* dynamic_ob1 = &ob1;
+	School* dynamic_ob2 = &ob2;
+	ob1.printInfo();
+	cout << endl;
+	ob2.printInfo();
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
